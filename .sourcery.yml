@@ -1,0 +1,45 @@
+configurations:
+  - sources:
+      include:
+        - Sources/
+      exclude:
+        - Sources/Testing/
+    templates:
+      - sourcery/template/SparkAutoMockable.stencil
+    output: Sources/Testing/Generated/AutoMockable.generated.swift
+    args:
+      autoMockableImports: [Combine]
+      autoMockableTestableImports: [Theming]
+  - sources:
+      include:
+        - Sources/
+      exclude:
+        - Sources/Testing/
+    templates:
+      - sourcery/template/SparkAutoMockTest.stencil
+    output: Sources/Testing/Generated/AutoMockTest.generated.swift
+    args:
+      autoMockableImports: [Combine]
+      autoMockableTestableImports: [Theming]
+  - sources:
+      include:
+        - Sources/
+      exclude:
+        - Sources/Testing/
+    templates:
+      - sourcery/template/SparkAutoPublisherTest.stencil
+    output: Sources/Testing/Generated/AutoPublisherTest.generated.swift
+    args:
+      autoMockableImports: [Combine]
+      autoMockableTestableImports: [Theming]
+  - sources:
+      include:
+        - Sources/
+      exclude:
+        - Sources/Testing/
+    templates:
+      - sourcery/template/SparkAutoViewModelStub.stencil
+    output: Sources/Testing/Generated/AutoViewModelStub.generated.swift
+    args:
+      autoMockableImports: [Combine]
+      autoMockableTestableImports: [Theming]
