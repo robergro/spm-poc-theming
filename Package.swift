@@ -3,9 +3,6 @@
 
 import PackageDescription
 
-// TODO: do we need Common ???
-// TODO: found a better name than SparkThemingTesting
-
 let package = Package(
     name: "SparkTheming",
     platforms: [
@@ -25,46 +22,20 @@ let package = Package(
             targets: ["Theme"]
         ),
     ],
-    dependencies: [
-        // Git
-//        .package(
-//            url: "https://github.com/robergro/spm-poc-theming.git",
-//            from: "1.0.0"
-//        ),
-
-        // Local
-        .package(
-            path: "../spm-poc-common"
-        )
-    ],
     targets: [
         .target(
-            name: "Theming",
-            dependencies: [
-                .product(
-                    name: "SparkCommon",
-                    package: "spm-poc-common"
-                )
-            ]
+            name: "Theming"
         ),
         .target(
             name: "Testing",
             dependencies: [
-                "Theming",
-                .product(
-                    name: "SparkCommon",
-                    package: "spm-poc-common"
-                )
+                "Theming"
             ]
         ),
         .target(
             name: "Theme",
             dependencies: [
-                "Theming",
-                .product(
-                    name: "SparkCommon",
-                    package: "spm-poc-common"
-                )
+                "Theming"
             ],
             resources: [
                 .process("Resources/")
@@ -75,11 +46,7 @@ let package = Package(
             dependencies: [
                 "Theme",
                 "Theming",
-                "Testing",
-                .product(
-                    name: "SparkCommonMock",
-                    package: "spm-poc-common"
-                )
+                "Testing"
             ]
         ),
     ]
