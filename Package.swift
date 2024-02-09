@@ -11,31 +11,31 @@ let package = Package(
     products: [
         .library(
             name: "SparkTheming",
-            targets: ["Theming"]
+            targets: ["SparkTheming"]
         ),
         .library(
             name: "SparkThemingTesting",
-            targets: ["Testing"]
+            targets: ["SparkThemingTesting"]
         ),
         .library(
             name: "SparkTheme",
-            targets: ["Theme"]
+            targets: ["SparkTheme"]
         ),
     ],
     targets: [
         .target(
-            name: "Theming"
+            name: "SparkTheming"
         ),
         .target(
-            name: "Testing",
+            name: "SparkThemingTesting",
             dependencies: [
-                "Theming"
+                "SparkTheming"
             ]
         ),
         .target(
-            name: "Theme",
+            name: "SparkTheme",
             dependencies: [
-                "Theming"
+                "SparkTheming"
             ],
             resources: [
                 .process("Resources/")
@@ -44,9 +44,9 @@ let package = Package(
         .testTarget(
             name: "ThemeTests",
             dependencies: [
-                "Theme",
-                "Theming",
-                "Testing"
+                "SparkTheme",
+                "SparkTheming",
+                "SparkThemingTesting"
             ]
         ),
     ]

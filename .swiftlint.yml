@@ -2,9 +2,6 @@ included:
     - Sources
     - Tests
 
-excluded:
-    - Sources/Testing/Generated/
-
 # Enabled rules for CI linting
 only_rules:
  - colon

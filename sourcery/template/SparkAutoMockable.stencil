@@ -13,7 +13,7 @@ import {{ import }}
 {% macro existentialVariableTypeName typeName %}{% if typeName|contains:"any" and typeName|contains:"!" %}{{ typeName | replace:"any","(any" | replace:"!",")!" }}{% elif typeName|contains:"any" and typeName.isOptional %}{{ typeName | replace:"any","(any" | replace:"?",")?" }}{% elif typeName|contains:"any" and typeName.isClosure %}({{ typeName | replace:"any","(any" | replace:"?",")?" }}){%else%}{{ typeName }}{%endif%}{% endmacro %}
 {% macro existentialClosureVariableTypeName typeName %}{% if typeName|contains:"any" and typeName|contains:"!" %}{{ typeName | replace:"any","(any" | replace:"!",")?" }}{% elif typeName|contains:"any" and typeName.isClosure and typeName|contains:"?" %}{{ typeName | replace:"any","(any" | replace:"?",")?" }}{% elif typeName|contains:"any" and typeName|contains:"?" %}{{ typeName | replace:"any","(any" | replace:"?",")?" }}{%else%}{{ typeName }}{%endif%}{% endmacro %}
 {% macro existentialParameterTypeName typeName %}{% if typeName|contains:"any" and typeName|contains:"!" %}{{ typeName | replace:"any","(any" | replace:"!",")!" }}{% elif typeName|contains:"any" and typeName.isClosure and typeName|contains:"?" %}{{ typeName | replace:"any","(any" | replace:"?",")?" }}{% elif typeName|contains:"any" and typeName.isOptional %}{{ typeName | replace:"any","(any" | replace:"?",")?" }}{%else%}{{ typeName }}{%endif%}{% endmacro %}
-{% macro methodName method %}func {{ method.shortName}}({%- for param in method.parameters %}{% if param.argumentLabel == nil %}_ {{ param.name }}{%elif param.argumentLabel == param.name%}{{ param.name }}{%else%}{{ param.argumentLabel }} {{ param.name }}{% endif %}: {% call existentialParameterTypeName param.typeName %}{% if not forloop.last %}, {% endif %}{% endfor -%}){% endmacro %}
+{% macro methodName method %}public func {{ method.shortName}}({%- for param in method.parameters %}{% if param.argumentLabel == nil %}_ {{ param.name }}{%elif param.argumentLabel == param.name%}{{ param.name }}{%else%}{{ param.argumentLabel }} {{ param.name }}{% endif %}: {% call existentialParameterTypeName param.typeName %}{% if not forloop.last %}, {% endif %}{% endfor -%}){% endmacro %}
 
 {% macro genericTestedParam GenericList paramName %}{% set paramV2 %}"{{paramName}}"{% endset %}{% if GenericList | contains: paramV2 %}Any{% else %}{{paramName}}{%endif%}{% endmacro %}
 {% macro removeGenericContentInMethodName name %}{% if method.shortName| hasSuffix:">" %}{% for element in name|split:"<" %}{% if forloop.first %}{{ element }}{% endif %}{% endfor %}{% else %}{{name}}{% endif %}{% endmacro %}
@@ -59,7 +59,7 @@ import {{ import }}
 {% macro closureReturnTypeName method %}{% if method.isOptionalReturnType %}({{ method.unwrappedReturnTypeName }})?{% else %}{{ method.returnTypeName }}{% endif %}{% endmacro %}
 
 {% macro methodClosureDeclaration method %}
-    public {% call methodClosureName method %}: (({% for param in method.parameters %}{% call existentialVariableTypeName param.typeName %}{% if not forloop.last %}, {% endif %}{% endfor %}) {% if method.isAsync %}async {% endif %}{% if method.throws %}throws {% endif %}-> {% if method.isInitializer %}Void{% else %}{% call closureReturnTypeName method %}{% endif %})?
+    public var {% call methodClosureName method %}: (({% for param in method.parameters %}{% call existentialVariableTypeName param.typeName %}{% if not forloop.last %}, {% endif %}{% endfor %}) {% if method.isAsync %}async {% endif %}{% if method.throws %}throws {% endif %}-> {% if method.isInitializer %}Void{% else %}{% call closureReturnTypeName method %}{% endif %})?
 {% endmacro %}
 
 {% macro methodClosureDeclarationV2 method GenericParameters %}
@@ -216,7 +216,7 @@ public final class {{ type.name }}GeneratedMock: {{ import }}.{{ type.name }}{% 
 {% if type.allMethods|!definedInExtension|count > 0 %}
     // MARK: Reset 
 
-    func reset() {
+    public func reset() {
     {% for method in type.allMethods|!definedInExtension %}
         {% call swiftifyMethodNameV2 method %}CallsCount = 0
         {% if method.parameters.count == 1 %}
