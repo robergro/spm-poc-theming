@@ -42,7 +42,7 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "ThemeTests",
+            name: "SparkThemeUnitTests",
             dependencies: [
                 "SparkTheme",
                 "SparkTheming",

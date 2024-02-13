@@ -28,6 +28,12 @@ public extension ColorTokenGeneratedMock {
         return color
     }
 
+    static func mock(_ color: Color) -> ColorTokenGeneratedMock {
+        let mock = ColorTokenGeneratedMock()
+        mock.color = color
+        return mock
+    }
+
     // MARK: - Equatable
 
     static func == (lhs: ColorTokenGeneratedMock, rhs: ColorTokenGeneratedMock) -> Bool {
