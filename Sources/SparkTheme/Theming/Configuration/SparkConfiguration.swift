@@ -23,6 +23,6 @@ public struct SparkConfiguration {
         guard !self.didLoad else { return }
         self.didLoad = true
 
-        Bundle(for: Class.self).registerAllFonts()
+        Bundle.registerAllFonts()
     }
 }

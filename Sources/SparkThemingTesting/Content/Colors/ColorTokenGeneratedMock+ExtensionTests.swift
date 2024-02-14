@@ -19,7 +19,7 @@ public extension ColorTokenGeneratedMock {
     }
 
     // MARK: - Methods
-    
+
     static func random() -> ColorTokenGeneratedMock {
         let color = ColorTokenGeneratedMock()
         let random = UIColor.random()

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public extension Bundle {
+extension Bundle {
 
     // MARK: - Constants
 
@@ -20,23 +20,30 @@ public extension Bundle {
     // MARK: - Fonts
 
     /// Register all bundle fonts  (.ttf or .otf) to be used by Spark
-    func registerAllFonts() {
-        // Get all custom fonts on bundle
+    static func registerAllFonts() {
+        // Get URLs
         let fontURLs = Constants.fontExtensions.compactMap { fontExtension in
-            self.urls(forResourcesWithExtension: fontExtension, subdirectory: nil)
+            return Bundle.module.urls(forResourcesWithExtension: fontExtension, subdirectory: nil)
         }
-            .flatMap {
-                $0
-            }
-            .map {
-                $0 as CFURL
-            }
+        .flatMap {
+            $0
+        }
+        .map {
+            $0 as CFURL
+        }
+
+        guard !fontURLs.isEmpty else {
+            fatalError("No font files found in the resource folder in the [SparkTheme] SPM")
+        }
 
         // Try to register all customs fonts
         fontURLs.forEach {
-            guard let fontDataProvider = CGDataProvider(url: $0),
-                  let font = CGFont(fontDataProvider) else {
-                return
+            guard let fontDataProvider = CGDataProvider(url: $0) else {
+                fatalError("Bad Font Data Provider in the resource folder in the [SparkTheme] SPM")
+            }
+
+            guard let font = CGFont(fontDataProvider) else {
+                fatalError("CGFont conversion failed in the resource folder in the [SparkTheme] SPM")
             }
 
             var error: Unmanaged<CFError>?

@@ -22,7 +22,7 @@ public extension ColorsGeneratedMock {
         mock.basic = ColorsBasicGeneratedMock.mocked()
         mock.base = ColorsBaseGeneratedMock.mocked()
         mock.feedback = ColorsFeedbackGeneratedMock.mocked()
-        mock.states =  ColorsStatesGeneratedMock.mocked()
+        mock.states = ColorsStatesGeneratedMock.mocked()
 
         return mock
     }

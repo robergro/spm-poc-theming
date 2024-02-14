@@ -22,14 +22,33 @@ let package = Package(
             targets: ["SparkTheme"]
         ),
     ],
+    dependencies: [
+        // External
+        .package(
+            url: "https://github.com/realm/SwiftLint",
+            from: "0.54.0"
+        )
+    ],
     targets: [
         .target(
-            name: "SparkTheming"
+            name: "SparkTheming",
+            plugins: [
+                .plugin(
+                    name: "SwiftLintPlugin",
+                    package: "SwiftLint"
+                )
+            ]
         ),
         .target(
             name: "SparkThemingTesting",
             dependencies: [
                 "SparkTheming"
+            ],
+            plugins: [
+                .plugin(
+                    name: "SwiftLintPlugin",
+                    package: "SwiftLint"
+                )
             ]
         ),
         .target(
@@ -39,6 +58,12 @@ let package = Package(
             ],
             resources: [
                 .process("Resources/")
+            ],
+            plugins: [
+                .plugin(
+                    name: "SwiftLintPlugin",
+                    package: "SwiftLint"
+                )
             ]
         ),
         .testTarget(
@@ -47,6 +72,12 @@ let package = Package(
                 "SparkTheme",
                 "SparkTheming",
                 "SparkThemingTesting"
+            ],
+            plugins: [
+                .plugin(
+                    name: "SwiftLintPlugin",
+                    package: "SwiftLint"
+                )
             ]
         ),
     ]
