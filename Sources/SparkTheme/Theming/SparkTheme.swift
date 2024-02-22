@@ -22,7 +22,9 @@ public struct SparkTheme: Theme  {
 
     public static var shared = Self()
 
-    public init()  {}
+    public init()  {
+        print("LOGSPARK")
+    }
 
 
 
