@@ -16,7 +16,7 @@ import Foundation
 
 
 
-public struct SparkTheme : Theme  {
+public struct SparkTheme: Theme  {
 
     // MARK: - Properties
 
@@ -32,11 +32,11 @@ public struct SparkTheme : Theme  {
     public let border: Border = SparkBorder()
 
 
-    public var    colors: Colors =   SparkColors()
+    public var    colors: Colors = SparkColors()
     public   let elevation: Elevation = SparkElevation()
-    public let layout : Layout =  SparkLayout()
+    public let layout: Layout = SparkLayout()
     public let typography: Typography = SparkTypography()
-    public  let dims: Dims =    SparkDims()
+    public  let dims: Dims = SparkDims()
 
 
 
