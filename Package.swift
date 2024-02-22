@@ -3,6 +3,8 @@
 
 import PackageDescription
 
+// TODO: manage the linter on the mac and not with the SPM
+
 let package = Package(
     name: "SparkTheming",
     platforms: [
@@ -24,32 +26,34 @@ let package = Package(
     ],
     dependencies: [
         // External
-        .package(
-            url: "https://github.com/realm/SwiftLint",
-            from: "0.54.0"
-        )
+//        .package(
+//            url: "https://github.com/realm/SwiftLint",
+//            from: "0.54.0"
+//        )
     ],
     targets: [
         .target(
-            name: "SparkTheming",
+            name: "SparkTheming"/*,
             plugins: [
                 .plugin(
                     name: "SwiftLintPlugin",
                     package: "SwiftLint"
                 )
             ]
+                                 */
         ),
         .target(
             name: "SparkThemingTesting",
             dependencies: [
                 "SparkTheming"
-            ],
+            ]/*,
             plugins: [
                 .plugin(
                     name: "SwiftLintPlugin",
                     package: "SwiftLint"
                 )
             ]
+              */
         ),
         .target(
             name: "SparkTheme",
@@ -58,13 +62,14 @@ let package = Package(
             ],
             resources: [
                 .process("Resources/")
-            ],
+            ]/*,
             plugins: [
                 .plugin(
                     name: "SwiftLintPlugin",
                     package: "SwiftLint"
                 )
             ]
+              */
         ),
         .testTarget(
             name: "SparkThemeUnitTests",
@@ -72,13 +77,14 @@ let package = Package(
                 "SparkTheme",
                 "SparkTheming",
                 "SparkThemingTesting"
-            ],
+            ]/*,
             plugins: [
                 .plugin(
                     name: "SwiftLintPlugin",
                     package: "SwiftLint"
                 )
             ]
+              */
         ),
     ]
 )
