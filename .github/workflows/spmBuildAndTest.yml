@@ -5,7 +5,7 @@ on:
     
 jobs:
   build:
-    name: build
+    name: Build
     runs-on: macos-14
     steps:
     - name: Set Swift Version
@@ -21,8 +21,8 @@ jobs:
     - name: Build
       run: xcodebuild -scheme SparkTheming-Package -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15 pro' build
 
-  unit_test:
-    name: unit_test
+  test:
+    name: Unit Test and Snapshot Testing
     needs: [ build ]
     runs-on: macos-14
     steps:
