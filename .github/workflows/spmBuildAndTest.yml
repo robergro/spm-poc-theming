@@ -5,9 +5,13 @@ on:
     
 jobs:
   build:
-    name: Build the $SPM_NAME SPM after changes made by ${{ github.author }}
+    name: Build
     runs-on: macos-14
     steps:
+    - name: "Say Hello Mona it's Monday"
+      run: echo "Build the $SPM_NAME SPM"
+      env:
+        First_Name: Mona
     - name: Set Swift Version
       uses: swift-actions/setup-swift@v1
       with:
