@@ -3,8 +3,6 @@
 
 import PackageDescription
 
-// TODO: manage the linter on the mac and not with the SPM
-
 let package = Package(
     name: "SparkTheming",
     platforms: [
@@ -23,13 +21,6 @@ let package = Package(
             name: "SparkTheme",
             targets: ["SparkTheme"]
         ),
-    ],
-    dependencies: [
-        // External
-//        .package(
-//            url: "https://github.com/realm/SwiftLint",
-//            from: "0.54.0"
-//        )
     ],
     targets: [
         .target(
