@@ -100,3 +100,9 @@ custom_rules:
   regex: "(dump\\()|(print\\()|(debugPrint\\()|(NSLog\\()"
   message: "Debugging method is not allowed."
   severity: error
+ no_local_package:
+  included: "Package.swift"
+  name: "Debugging method"
+  regex: "(.package\\()"
+  message: "Debugging method is not allowed."
+  severity: error

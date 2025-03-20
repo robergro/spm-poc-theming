@@ -22,4 +22,8 @@ struct SparkBorder: Border {
         large: 16,
         xLarge: 24
     )
+
+    static func azdaz() {
+        print("LOGROb")
+    }
 }
