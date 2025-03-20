@@ -1,0 +1,78 @@
+# name: build-demo-app
+# on:
+#   issue_comment:
+#     types: [created]
+
+# jobs:
+#   build-demo-app:
+#     uses: leboncoin/spark-ios-common/.github/workflows/buildDemoApp.yml@main
+
+name: deploy-docC-on-github-page
+
+on:
+  release:
+    types: [published, deleted]
+  # push:
+  #   branches: ["main"]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  swift_version: "6.0.2"
+  xcode_path: "/Applications/Xcode_16.2.app"
+  xcodebuild_sdk: -sdk iphonesimulator
+  xcodebuild_derivedData: ".spmComponentDerivedData/"
+  xcodebuild_destination: -destination 'generic/platform=iOS Simulator'
+  doc_path: ".docs"
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: macos-15
+    steps:
+      - name: "Package name"
+        run: echo "Generate DocC for SparkTheming SPM at ${{ github.workspace }}"
+      - name: Set Swift Version
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: ${{ env.swift_version }}
+      - name: Get swift version
+        run: swift --version
+      - name: Select Xcode
+        run: sudo xcode-select -s ${{ env.xcode_path }}
+      - name: Checkout Action
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Build DocC
+        run: |
+          xcodebuild -list
+          xcodebuild -scheme SparkTheming -derivedDataPath ${{ env.xcodebuild_derivedData }} ${{ env.xcodebuild_sdk }} ${{ env.xcodebuild_destination }} docbuild
+
+          xcrun docc process-archive \
+            transform-for-static-hosting "${{ env.xcodebuild_derivedData }}Build/Products/Debug-iphonesimulator/SparkTheming.doccarchive" \
+            --output-path ".docs" \
+            --hosting-base-path "SparkTheming"
+
+          echo "<script>window.location.href += \"/documentation/SparkTheming\"</script>" > .docs/index.html;
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.doc_path }}
+      - id: deployment
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
